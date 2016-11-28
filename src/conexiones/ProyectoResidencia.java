@@ -15,8 +15,8 @@ public class ProyectoResidencia{
     public Connection conexion(){
          try{
             Class.forName("com.mysql.jdbc.Driver"); //http://soportesistemasvt.servehttp.com/
-           con=DriverManager.getConnection("jdbc:mysql://soportesistemasvt.servehttp.com/proyecto_residencia","sistema","S15t3m45"); 
-           //con=DriverManager.getConnection("jdbc:mysql://127.0.0.1/proyecto_residencia","root","1234"); //se cambio esto 127.0.0.1
+           //con=DriverManager.getConnection("jdbc:mysql://soportesistemasvt.servehttp.com/proyecto_residencia","sistema","S15t3m45"); 
+           con=DriverManager.getConnection("jdbc:mysql://127.0.0.1/proyecto_residencia","root","1234"); //se cambio esto 127.0.0.1
 //JOptionPane.showMessageDialog(null,"SI HAY conexion");
             System.out.println("Conexion establecida");
         }catch(Exception e ){

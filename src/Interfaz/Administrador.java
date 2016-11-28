@@ -6,6 +6,7 @@
 package Interfaz;
 import static Interfaz.PantallaPrincipal.ESCRITORIO;
 import Objetos_clases.Invitado;
+
 import conexiones.ProyectoResidencia;
 import java.awt.BorderLayout;
 import java.awt.Color;

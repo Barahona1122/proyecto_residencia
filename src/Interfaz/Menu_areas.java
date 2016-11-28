@@ -5,9 +5,12 @@
  */
 package Interfaz;
 
+import static Interfaz.PantallaPrincipal.ESCRITORIO;
+import Objetos_clases.Locacion_clase;
 import conexiones.ProyectoResidencia;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +33,7 @@ public class Menu_areas extends javax.swing.JInternalFrame {
     public Menu_areas() {
         initComponents();
         llenar();
-        Mostrar();
+        MostrarArea();
         
           //------------------------------------------------IMAGEN DE FONDO
         FondoAdmin p = new FondoAdmin("paso.jpg"); 
@@ -60,18 +63,18 @@ p.repaint();
     
     }
     
-   private void Mostrar(){
+   private void MostrarArea(){
            //this.SOPORTE.removeAllItems();
  try{
  Statement stm = con.createStatement();
  ResultSet rs = stm.executeQuery("select * from locacion");
- String datos[] = new String[3];
  
  while(rs.next()){
- 
-     datos[0]=rs.getString(1);
-     datos[1]=rs.getString(2);
-     this.LOCACION.addItem(datos[0]+"-"+datos[1]);
+Locacion_clase c = new Locacion_clase();
+c.setId_locacion(rs.getInt("id_locacion"));
+c.setNombre_locacion(rs.getString("nombre_locacion"));
+      
+    this.LOCACION.addItem(c);
  }    
  }catch(Exception e){
      JOptionPane.showMessageDialog(null,"Error en la conexion"+e);
@@ -96,7 +99,6 @@ p.repaint();
         jButton2 = new javax.swing.JButton();
         AREA = new proyectoresidencia.JCTextField();
         LOCACION = new javax.swing.JComboBox();
-        ACTUALIZAR = new javax.swing.JButton();
 
         ID_AREA.setEnabled(false);
         ID_AREA.setPlaceholder("ID");
@@ -181,57 +183,37 @@ p.repaint();
             }
         });
 
-        ACTUALIZAR.setBackground(new java.awt.Color(0, 102, 153));
-        ACTUALIZAR.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
-        ACTUALIZAR.setForeground(new java.awt.Color(255, 255, 255));
-        ACTUALIZAR.setText("Actualizar");
-        ACTUALIZAR.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        ACTUALIZAR.setEnabled(false);
-        ACTUALIZAR.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ACTUALIZARActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(LOCACION, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(AREA, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(AGREGAR)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ACTUALIZAR)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
-                        .addGap(11, 11, 11))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LOCACION, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(AREA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(149, Short.MAX_VALUE)
-                .addComponent(LOCACION, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(AREA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LOCACION, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AREA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AGREGAR)
-                    .addComponent(jButton2)
-                    .addComponent(ACTUALIZAR))
-                .addGap(110, 110, 110))
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -294,44 +276,23 @@ LOCACION.setSelectedIndex(0);
       // TODO add your handling code here:
     }//GEN-LAST:event_jTable1KeyPressed
 
-    private void ACTUALIZARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ACTUALIZARActionPerformed
-  if(LOCACION.getSelectedItem().equals("Seleccionar locacion") || ID_AREA.getText().equals("")&& AREA.getText().equals(""))
-       {
-         JOptionPane.showMessageDialog(null,"Campos vacíos","Aviso",JOptionPane.ERROR_MESSAGE);
-       }else{
-        String unoCombo =  (String) LOCACION.getSelectedItem(); //CONVIERTE EL JCOMBOBOX A STRING 
-       String decomponerCOMBO[] = unoCombo.split("-");
-       Integer resultadoCombo = Integer.parseInt(decomponerCOMBO[0]);  
- 
-       try{
-    PreparedStatement pst = con.prepareStatement("UPDATE area_empresa SET nombre_area='"+AREA.getText()+"' WHERE id_area='"+ID_AREA.getText()+"'");
-            pst.executeUpdate();     
-}catch(Exception e){
-JOptionPane.showMessageDialog(null,"Error"+e);
-}
-            try{
-    PreparedStatement pst = con.prepareStatement("UPDATE area_empresa SET id_locacion='"+resultadoCombo+"' WHERE id_area='"+ID_AREA.getText()+"'");
-            pst.executeUpdate();      
-}catch(Exception e){
-JOptionPane.showMessageDialog(null,"Error"+e);
-}      
-            AREA.setText(null);
-            LOCACION.setSelectedIndex(0);
-            ID_AREA.setText(null);
-       }
-           llenar();      
-        
-// TODO add your handling code here:
-    }//GEN-LAST:event_ACTUALIZARActionPerformed
-
     private void MODIFICARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICARActionPerformed
-  ACTUALIZAR.setEnabled(true);
-AGREGAR.setVisible(false);
+      Modificar_area cat = new Modificar_area();
+        ESCRITORIO.add(cat);
+        cat.show();
+        cat.toFront();
+        Dimension desktopSize = ESCRITORIO.getSize();
+        Dimension FrameSize = cat.getSize();
+        cat.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+    
+        
+        
+        
         int fila = jTable1.getSelectedRow();
  if(fila>=0){
    
-     ID_AREA.setText(jTable1.getValueAt(fila, 0).toString());            
-            AREA.setText(jTable1.getValueAt(fila, 1).toString());
+     Modificar_area.ID_AREA.setText(jTable1.getValueAt(fila, 0).toString());            
+            Modificar_area.AREA.setText(jTable1.getValueAt(fila, 1).toString());
  }        // TODO add your handling code here:
     }//GEN-LAST:event_MODIFICARActionPerformed
 
@@ -363,7 +324,6 @@ AREA.setCursor(null);
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ACTUALIZAR;
     private javax.swing.JButton AGREGAR;
     private proyectoresidencia.JCTextField AREA;
     private proyectoresidencia.JCTextField ID_AREA;
